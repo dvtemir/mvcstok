@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mvcstokModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kategoriler">
+    <Key>
+      <PropertyRef Name="KATEGORİID" />
+    </Key>
+    <Property Name="KATEGORİID" Type="Int32" Nullable="false" />
+    <Property Name="KATEGORİAD" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="musteriler">
+    <Key>
+      <PropertyRef Name="MUSTERİID" />
+    </Key>
+    <Property Name="MUSTERİID" Type="Int32" Nullable="false" />
+    <Property Name="MUSTERİAD" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MUSTERİSOYAD" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="musteriler1" Relationship="Self.FK_musteriler_musteriler" FromRole="musteriler" ToRole="musteriler1" />
+    <NavigationProperty Name="musteriler2" Relationship="Self.FK_musteriler_musteriler" FromRole="musteriler1" ToRole="musteriler" />
+  </EntityType>
+  <EntityType Name="stok">
+    <Key>
+      <PropertyRef Name="SATİSID" />
+    </Key>
+    <Property Name="SATİSID" Type="Int32" Nullable="false" />
+    <Property Name="URUN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="MUSTERİ" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ADET" Type="Int32" />
+    <Property Name="FİYAT" Type="Int32" />
+    <NavigationProperty Name="urunler" Relationship="Self.FK_urunler_satis" FromRole="stok" ToRole="urunler" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="urunler">
+    <Key>
+      <PropertyRef Name="URUNID" />
+    </Key>
+    <Property Name="URUNID" Type="Int32" Nullable="false" />
+    <Property Name="URUNAD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="URUNKATEGORİ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FİYAT" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="MARKA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="STOK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="stok1" Relationship="Self.FK_urunler_satis" FromRole="urunler" ToRole="stok" />
+  </EntityType>
+  <Association Name="FK_musteriler_musteriler">
+    <End Role="musteriler" Type="Self.musteriler" Multiplicity="1" />
+    <End Role="musteriler1" Type="Self.musteriler" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="musteriler">
+        <PropertyRef Name="MUSTERİID" />
+      </Principal>
+      <Dependent Role="musteriler1">
+        <PropertyRef Name="MUSTERİID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_urunler_satis">
+    <End Role="stok" Type="Self.stok" Multiplicity="1" />
+    <End Role="urunler" Type="Self.urunler" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="stok">
+        <PropertyRef Name="SATİSID" />
+      </Principal>
+      <Dependent Role="urunler">
+        <PropertyRef Name="URUNID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mvcstokEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
+    <EntitySet Name="musteriler" EntityType="Self.musteriler" />
+    <EntitySet Name="stok" EntityType="Self.stok" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="urunler" EntityType="Self.urunler" />
+    <AssociationSet Name="FK_musteriler_musteriler" Association="Self.FK_musteriler_musteriler">
+      <End Role="musteriler" EntitySet="musteriler" />
+      <End Role="musteriler1" EntitySet="musteriler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_urunler_satis" Association="Self.FK_urunler_satis">
+      <End Role="stok" EntitySet="stok" />
+      <End Role="urunler" EntitySet="urunler" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

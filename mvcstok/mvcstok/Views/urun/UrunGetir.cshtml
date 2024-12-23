@@ -1,0 +1,35 @@
+﻿@model mvcstok.Models.UrunModel
+
+@{
+    ViewBag.Title = "UrunGetir";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("Guncelle", "Urun", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.LabelFor(k => k.URUNID)
+    @Html.TextBoxFor(k => k.URUNID, new { @class = "form-control" })
+
+    @Html.LabelFor(k => k.URUNAD)
+    @Html.TextBoxFor(k => k.URUNAD, new { @class = "form-control" })
+
+    @Html.LabelFor(k => k.URUNKATEGORİ)
+    @Html.TextBoxFor(k => k.URUNKATEGORİ, new { @class = "form-control" })
+
+    @Html.LabelFor(k => k.FİYAT)
+    @Html.TextBoxFor(k => k.FİYAT, new { @class = "form-control" })
+
+    @Html.LabelFor(k => k.MARKA)
+    @Html.TextBoxFor(k => k.MARKA, new { @class = "form-control" })
+
+    @Html.LabelFor(k => k.STOK)
+    @Html.TextBoxFor(k => k.STOK, new { @class = "form-control" })
+
+</div>
+  
+<div>
+    <button class="btn btn-warning"></button>
+</div>
+    
+}
